@@ -1,0 +1,18 @@
+{
+    "require": {
+        "squizlabs/php_codesniffer": "*",
+        "phpmd/phpmd": "^2.6",
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "laravel/installer": "^2.0",
+        "phpunit/phpunit": "^7.4",
+        "phpstan/phpstan": "^0.10.3",
+        "phan/phan": "dev-master",
+        "thecodingmachine/phpstan-strict-rules": "^0.10.3",
+        "phpstan/phpstan-php-parser": "^0.10.0",
+        "phpstan/phpstan-deprecation-rules": "^0.10.2",
+        "phpstan/phpstan-phpunit": "^0.10.0",
+        "phpstan/phpstan-strict-rules": "^0.10.1"
+    },
+    "require-dev": {
+    }
+}

@@ -1,0 +1,12 @@
+includes:
+    - C:/Users/Avonture_christophe/AppData/Roaming/Composer/vendor/phpstan/phpstan-php-parser\extension.neon
+    - C:/Users/Avonture_christophe/AppData/Roaming/Composer/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - C:/Users/Avonture_christophe/AppData/Roaming/Composer/vendor/phpstan/phpstan-phpunit/extension.neon
+    - C:/Users/Avonture_christophe/AppData/Roaming/Composer/vendor/phpstan/phpstan-phpunit/rules.neon
+    - C:/Users/Avonture_christophe/AppData/Roaming/Composer/vendor/phpstan/phpstan-strict-rules/rules.neon
+    - C:/Users/Avonture_christophe/AppData/Roaming/Composer/vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
+parameters:
+    - autoload_files:
+        - %currentWorkingDirectory%/vendor/autoload.php
+    excludes_analyse:
+        - %currentWorkingDirectory%/vendor/*
