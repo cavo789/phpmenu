@@ -2,19 +2,18 @@
 
 > My dot files and configuration items / scripts. Remark: scripts are Windows batch files; won't work on other OS than Windows
 
--   [DOT Files](#dot-files)
-    _ [Install](#install)
-    _ [Environnement variable - PATH](#environnement-variable---path)
-    _ [Composer - Global](#composer---global)
-    _ [File .phpmenu-ignore](#file-phpmenu-ignore)
-    _ [Usage](#usage)
-    _ [2. phpmenu.bat](#2-phpmenubat)
-    _ [2.1 phan.bat](#21-phanbat)
-    _ [2.2 phpstan.bat](#22-phpstanbat)
-    _ [2.3 phpcbf.bat](#23-phpcbfbat)
-    _ [2.4 phpcs.bat](#24-phpcsbat)
-    _ [2.5 php-cs-fixer.bat](#25-php-cs-fixerbat)
-    _ [License](#license)
+_ [Install](#install)
+	_ [Environnement variable - PATH](#environnement-variable---path)
+	_ [Composer - Global](#composer---global)
+	_ [File .phpmenu-ignore](#file-phpmenu-ignore)
+_ [Usage](#usage)
+	_ [phpmenu.bat](#phpmenubat)
+	_ [1 phan.bat](#1-phanbat)
+	_ [2 phpstan.bat](#2-phpstanbat)
+	_ [3 phpcbf.bat](#3-phpcbfbat)
+	_ [4 phpcs.bat](#4-phpcsbat)
+	_ [5 php-cs-fixer.bat](#5-php-cs-fixerbat)
+_ [License](#license)
 
 ## Install
 
