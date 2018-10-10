@@ -1,4 +1,4 @@
-@echo off
+@ECHO OFF
 
 setlocal enabledelayedexpansion enableextensions
 
@@ -8,11 +8,13 @@ REM - each subfolder of the current working                    -
 REM - @see https://github.com/phpstan/phpstan                  -
 REM ------------------------------------------------------------
 
-cls
+CLS
 
-echo ===================================
-echo = Running PHPSTAN                 =
-echo ===================================
+ECHO ===================================
+ECHO = Running PHPSTAN                 =
+ECHO = PHP Static Analysis Tool        =
+ECHO ===================================
+ECHO.
 
 REM Get the folder of this current script. 
 REM Suppose that the ruleset.xml configuration file can be retrieved
@@ -37,11 +39,10 @@ REM If not, php-cs-fixer won't be retrieved in the %APPDATA% folder
 
 REM --level max is the highest control level (0 is the loosest and 7 is the strictest) 
 REM is https://github.com/phpstan/phpstan#rule-levels
-call %APPDATA%\Composer\vendor\bin\phpstan analyze %1 --level max -c %ScriptFolder%phpstan.neon
+CALL %APPDATA%\Composer\vendor\bin\phpstan analyze %1 --level max -c %ScriptFolder%phpstan.neon
 
-goto:eof
+GOTO:EOF
 
 :END
 ECHO.
-
 ECHO End

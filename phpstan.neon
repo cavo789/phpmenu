@@ -9,4 +9,7 @@ parameters:
     - autoload_files:
         - %currentWorkingDirectory%/vendor/autoload.php
     excludes_analyse:
+        - %currentWorkingDirectory%/.phan/*
+        - %currentWorkingDirectory%/.git/*
+        - %currentWorkingDirectory%/.vscode/*
         - %currentWorkingDirectory%/vendor/*
