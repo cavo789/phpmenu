@@ -37,6 +37,7 @@ ECHO.
 
 ECHO  1. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %scanOnlyFolderName%
 ECHO  2. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
+ECHO  3. Start PHPCPD (PHP Copy/Paste detector) shortcut: phpcpd.bat %scanOnlyFolderName%
 ECHO.
 ECHO  5. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
 ECHO.
@@ -51,6 +52,7 @@ SET /P answer="Please make a choice? " 0-8
 REM IF /I for case insensitive check
 IF /I "%answer%"=="1" GOTO :PHAN
 IF /I "%answer%"=="2" GOTO :PHPSTAN
+IF /I "%answer%"=="3" GOTO :PHPCPD
 IF /I "%answer%"=="5" GOTO :PHPCBF
 IF /I "%answer%"=="7" GOTO :PHPCS
 IF /I "%answer%"=="8" GOTO :PHPCSFIXER
@@ -65,6 +67,11 @@ GOTO :END
 :PHPSTAN
 CLS
 CALL phpstan.bat %scanOnlyFolderName%
+GOTO :END
+
+:PHPCPD
+CLS
+CALL phpcpd.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPCBF
@@ -93,7 +100,7 @@ ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to process all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phpmenu.bat Classes" for processing only the Classes folder (case 
+ECHO for instance, "phpmenu.bat Classes" for processing only the Classes folder (case
 ECHO not sensitive).
 ECHO.
 
