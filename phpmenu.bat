@@ -27,16 +27,21 @@ SET scanOnlyFolderName=%1
 
 IF "%scanOnlyFolderName%" NEQ "" (
 	ECHO *** Scripts will be fired only for folder %scanOnlyFolderName% ***
-	ECHO.
 )
 
-ECHO  1. Start PHAN (Phan is a static analyzer for PHP) (shortcut: phan.bat)
-ECHO  2. Start PHPStan (PHP Static Analysis Tool) (shortcut: phpstan.bat)
+IF "%scanOnlyFolderName%" EQU "" (
+   ECHO Tip: need to scan only one folder? Call phpmenu with the foldername like this: "phpmenu Myclasses"
+)
+
 ECHO.
-ECHO  5. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) (shortcut: phpcbf.bat)
+
+ECHO  1. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %scanOnlyFolderName%
+ECHO  2. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
 ECHO.
-ECHO  7. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) (shortcut: phpcs.bat)
-ECHO  8. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) (shortcut: php-cs-fixer.bat)
+ECHO  5. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
+ECHO.
+ECHO  7. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
+ECHO  8. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
 ECHO.
 ECHO  0. Exit
 ECHO.
