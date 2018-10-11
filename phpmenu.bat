@@ -35,15 +35,21 @@ IF "%scanOnlyFolderName%" EQU "" (
 
 ECHO.
 
-ECHO  1. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %scanOnlyFolderName%
-ECHO  2. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
-ECHO  3. Start PHPCPD (PHP Copy/Paste detector) shortcut: phpcpd.bat %scanOnlyFolderName%
+ECHO   Scan tools
+ECHO     1. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %scanOnlyFolderName%
+ECHO     2. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
+ECHO     3. Start PHPCPD (PHP Copy/Paste detector) shortcut: phpcpd.bat %scanOnlyFolderName%
+ECHO     4. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
 ECHO.
-ECHO  5. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
+ECHO   Testing tools
+ECHO     5. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
 ECHO.
-ECHO  7. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
-ECHO  8. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
-ECHO  9. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
+ECHO   Fixed standard violation
+ECHO     6. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
+ECHO     7. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
+ECHO.
+ECHO   Statistics
+ECHO     9. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
 ECHO.
 ECHO  0. Exit
 ECHO.
@@ -54,9 +60,10 @@ REM IF /I for case insensitive check
 IF /I "%answer%"=="1" GOTO :PHAN
 IF /I "%answer%"=="2" GOTO :PHPSTAN
 IF /I "%answer%"=="3" GOTO :PHPCPD
-IF /I "%answer%"=="5" GOTO :PHPCBF
-IF /I "%answer%"=="7" GOTO :PHPCS
-IF /I "%answer%"=="8" GOTO :PHPCSFIXER
+IF /I "%answer%"=="4" GOTO :PHPCS
+IF /I "%answer%"=="5" GOTO :PHPUNIT
+IF /I "%answer%"=="6" GOTO :PHPCBF
+IF /I "%answer%"=="7" GOTO :PHPCSFIXER
 IF /I "%answer%"=="9" GOTO :PHPLOC
 
 GOTO :END
@@ -76,6 +83,11 @@ CLS
 CALL phpcpd.bat %scanOnlyFolderName%
 GOTO :END
 
+:PHPUNIT
+CLS
+CALL phpunit.bat
+GOTO :END
+
 :PHPCBF
 CLS
 CALL phpcbf.bat %scanOnlyFolderName%
@@ -90,6 +102,7 @@ GOTO :END
 CLS
 CALL php-cs-fixer.bat %scanOnlyFolderName%
 GOTO :END
+
 
 :PHPLOC
 CLS

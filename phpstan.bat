@@ -30,9 +30,9 @@ IF "%1" NEQ "" (
 )
 
 
-REM Get the folder of this current script. 
+REM Get the folder of this current script.
 REM Suppose that the ruleset.xml configuration file can be retrieved
-REM from the current "script" folder which can be different of the 
+REM from the current "script" folder which can be different of the
 REM current working directory
 SET ScriptFolder=%~dp0
 
@@ -44,7 +44,7 @@ REM script
 SET configFile=%cd%\phpstan.neon
 IF NOT EXIST %configFile% (
     SET configFile=%ScriptFolder%phpstan.neon
-) 
+)
 
 REM Process the folder
 CALL :fnProcessFolder %scanFolderName%
@@ -60,14 +60,14 @@ ECHO Process folder %1
 ECHO.
 
 REM Be sure that PHPSTAN (https://github.com/phpstan/phpstan)
-REM has been installed globally by using, first, 
+REM has been installed globally by using, first,
 REM composer global require phpstan/phpstan
 REM If not, php-cs-fixer won't be retrieved in the %APPDATA% folder
 
-REM --level max is the highest control level (0 is the loosest and 7 is the strictest) 
+REM --level max is the highest control level (0 is the loosest and 7 is the strictest)
 REM is https://github.com/phpstan/phpstan#rule-levels
 
-REM ECHO Command line options are 
+REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO     --level max (max level of checks)
 ECHO     -c %configFile% (configuration file used)
@@ -88,13 +88,13 @@ ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phpstan.bat Classes" for scanning only the Classes folder (case 
+ECHO for instance, "phpstan.bat Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
 ECHO.
 ECHO Remarks
 ECHO -------
 ECHO.
-ECHO If you want to use your own configuration file; create a phpstran.neon file
+ECHO If you want to use your own configuration file; create a phpstan.neon file
 ECHO in your project's folder.
 
 GOTO END:
