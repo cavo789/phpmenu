@@ -10,10 +10,11 @@ REM ------------------------------------------------------------
 
 CLS
 
-ECHO ===================================
-ECHO = Running PHPSTAN                 =
-ECHO = PHP Static Analysis Tool        =
-ECHO ===================================
+ECHO ===========================================
+ECHO = Running PHPSTAN                         =
+ECHO = PHP Static Analysis Tool                =
+ECHO = @see https://github.com/phpstan/phpstan =
+ECHO ===========================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP

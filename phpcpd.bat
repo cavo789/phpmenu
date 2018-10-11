@@ -2,17 +2,18 @@
 
 setlocal enabledelayedexpansion enableextensions
 
-REM ------------------------------------------------------------
-REM - PHPCPD - Copy/Paste Detector (CPD) for PHP code          -
-REM - @see https://github.com/sebastianbergmann/phpcpd         -
-REM ------------------------------------------------------------
+REM ----------------------------------------------------
+REM - PHPCPD - Copy/Paste Detector (CPD) for PHP code  -
+REM - @see https://github.com/sebastianbergmann/phpcpd -
+REM ----------------------------------------------------
 
 CLS
 
-ECHO ==========================================
-ECHO = Running PHPCPD                         =
-ECHO = Copy/Paste Detector (CPD) for PHP code =
-ECHO ==========================================
+ECHO ====================================================
+ECHO = Running PHPCPD                                   =
+ECHO = Copy/Paste Detector (CPD) for PHP code           =
+ECHO = @see https://github.com/sebastianbergmann/phpcpd =
+ECHO ====================================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP

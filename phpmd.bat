@@ -9,10 +9,11 @@ REM ---------------------------------------
 
 CLS
 
-ECHO ==============================
-ECHO = Running PHPMD              =
-ECHO = PHP Mess Detector          =
-ECHO ==============================
+ECHO =======================================
+ECHO = Running PHPMD                       =
+ECHO = PHP Mess Detector                   =
+ECHO = @see https://github.com/phpmd/phpmd =
+ECHO =======================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
@@ -120,13 +121,42 @@ REM has been installed globally by using, first,
 REM composer global require phpmd/phpmd
 REM If not, phpmd won't be retrieved in the %APPDATA% folder
 
+REM Define the name for the logfile for the analyzed folder
+SET outputFile=%tmp%\phpmd_%1.html
+
+REM Remove previous file just to be sure that an old version won't remains
+IF EXIST %outputFile% (
+    DEL %outputFile%
+)
+
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
-ECHO     xml (for the report format)
+ECHO     html (for the report format)
 ECHO     %configFile% (for the configuration file)
+ECHO     --reportfile %outputFile% (output filename)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phpmd %1 xml %configFile%
+CALL %APPDATA%\Composer\vendor\bin\phpmd %1 html %configFile% --reportfile %outputFile%
+
+REM Open Chrome; use START and not CALL because START will not wait by default
+REM but only when there is something in the log
+CALL :setFileSize %outputFile%
+
+REM When the output logfile is empty, perfect, otherwise open Chrome
+if %fileSize% LSS 1 (
+    ECHO *** Wonderful! Everything is OK in folder %1 ***
+) ELSE (
+    REM !!! Warnings found in folder %1 !!!
+    START chrome.exe %outputFile%
+)
+GOTO:EOF
+
+::--------------------------------------------------------
+::-- setFileSize - Get file size
+::-- Should be called with the full filename as parameter
+::--------------------------------------------------------
+:setFileSize
+SET fileSize=%~z1
 
 GOTO:EOF
 

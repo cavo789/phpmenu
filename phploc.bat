@@ -9,10 +9,11 @@ REM -----------------------------------------------------------------
 
 CLS
 
-ECHO ===========================================
-ECHO = PHPLOC - Tool for quickly measuring the =
-ECHO = size of a PHP project                   =
-ECHO ===========================================
+ECHO ====================================================
+ECHO = PHPLOC - Tool for quickly measuring the          =
+ECHO = size of a PHP project                            =
+ECHO = @see https://github.com/sebastianbergmann/phploc =
+ECHO ====================================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
@@ -48,9 +49,10 @@ REM If not, phploc won't be retrieved in the %APPDATA% folder
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
+ECHO     --exclude vendor
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phploc %1
+CALL %APPDATA%\Composer\vendor\bin\phploc %1 --exclude vendor
 
 GOTO:EOF
 

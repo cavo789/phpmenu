@@ -9,10 +9,11 @@ REM -----------------------------------------------------
 
 CLS
 
-ECHO ==========================
-ECHO = PHPUNIT                =
-ECHO = PHP Unit Testing       =
-ECHO ==========================
+ECHO =====================================================
+ECHO = PHPUNIT                                           =
+ECHO = PHP Unit Testing                                  =
+ECHO = @see https://github.com/sebastianbergmann/phpunit =
+ECHO =====================================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
