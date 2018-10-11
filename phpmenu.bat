@@ -43,11 +43,12 @@ ECHO  5. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.b
 ECHO.
 ECHO  7. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
 ECHO  8. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
+ECHO  9. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
 ECHO.
 ECHO  0. Exit
 ECHO.
 
-SET /P answer="Please make a choice? " 0-8
+SET /P answer="Please make a choice? " 0-9
 
 REM IF /I for case insensitive check
 IF /I "%answer%"=="1" GOTO :PHAN
@@ -56,6 +57,7 @@ IF /I "%answer%"=="3" GOTO :PHPCPD
 IF /I "%answer%"=="5" GOTO :PHPCBF
 IF /I "%answer%"=="7" GOTO :PHPCS
 IF /I "%answer%"=="8" GOTO :PHPCSFIXER
+IF /I "%answer%"=="9" GOTO :PHPLOC
 
 GOTO :END
 
@@ -87,6 +89,11 @@ GOTO :END
 :PHPCSFIXER
 CLS
 CALL php-cs-fixer.bat %scanOnlyFolderName%
+GOTO :END
+
+:PHPLOC
+CLS
+CALL phploc.bat %scanOnlyFolderName%
 GOTO :END
 
 ::--------------------------------------------------------

@@ -2,17 +2,17 @@
 
 setlocal enabledelayedexpansion enableextensions
 
-REM ------------------------------------------------------------
-REM - PHPCPD - Copy/Paste Detector (CPD) for PHP code          -
-REM - @see https://github.com/sebastianbergmann/phpcpd         -
-REM ------------------------------------------------------------
+REM -----------------------------------------------------------------
+REM - PHPLOC - Tool for quickly measuring the size of a PHP project -
+REM - @see https://github.com/sebastianbergmann/phploc              -
+REM -----------------------------------------------------------------
 
 CLS
 
-ECHO ==========================================
-ECHO = Running PHPCPD                         =
-ECHO = Copy/Paste Detector (CPD) for PHP code =
-ECHO ==========================================
+ECHO ===========================================
+ECHO = PHPLOC - Tool for quickly measuring the =
+ECHO = size of a PHP project                   =
+ECHO ===========================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
@@ -41,16 +41,16 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
-REM Be sure that PHPCPD (https://github.com/sebastianbergmann/phpcpd)
+REM Be sure that PHPLOC (https://github.com/sebastianbergmann/phploc)
 REM has been installed globally by using, first,
-REM composer global require sebastian/phpcpd
-REM If not, phpcpd won't be retrieved in the %APPDATA% folder
+REM composer global require phploc/phploc
+REM If not, phploc won't be retrieved in the %APPDATA% folder
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phpcpd %1
+CALL %APPDATA%\Composer\vendor\bin\phploc %1
 
 GOTO:EOF
 
@@ -59,14 +59,15 @@ GOTO:EOF
 ::--------------------------------------------------------
 :HELP
 
-ECHO phpcpd.bat [-h] [foldername]
+ECHO phploc.bat [-h] [foldername]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phpcpd.bat Classes" for scanning only the Classes folder (case
+ECHO for instance, "phploc.bat Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
+ECHO.
 
 GOTO END:
 
