@@ -40,13 +40,14 @@ ECHO     1. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %s
 ECHO     2. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
 ECHO     3. Start PHPCPD (PHP Copy/Paste detector) shortcut: phpcpd.bat %scanOnlyFolderName%
 ECHO     4. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
+ECHO     5. Start PHPMD (Start PHP Mess Detector) shortcut: phpmd.bat %scanOnlyFolderName%
 ECHO.
 ECHO   Testing tools
-ECHO     5. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
+ECHO     6. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
 ECHO.
 ECHO   Fixed standard violation
-ECHO     6. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
-ECHO     7. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
+ECHO     7. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
+ECHO     8. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
 ECHO.
 ECHO   Statistics
 ECHO     9. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
@@ -61,9 +62,10 @@ IF /I "%answer%"=="1" GOTO :PHAN
 IF /I "%answer%"=="2" GOTO :PHPSTAN
 IF /I "%answer%"=="3" GOTO :PHPCPD
 IF /I "%answer%"=="4" GOTO :PHPCS
-IF /I "%answer%"=="5" GOTO :PHPUNIT
-IF /I "%answer%"=="6" GOTO :PHPCBF
-IF /I "%answer%"=="7" GOTO :PHPCSFIXER
+IF /I "%answer%"=="5" GOTO :PHPMD
+IF /I "%answer%"=="6" GOTO :PHPUNIT
+IF /I "%answer%"=="7" GOTO :PHPCBF
+IF /I "%answer%"=="8" GOTO :PHPCSFIXER
 IF /I "%answer%"=="9" GOTO :PHPLOC
 
 GOTO :END
@@ -86,6 +88,11 @@ GOTO :END
 :PHPUNIT
 CLS
 CALL phpunit.bat
+GOTO :END
+
+:PHPMD
+CLS
+CALL phpmd.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPCBF
