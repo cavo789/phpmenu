@@ -1,26 +1,32 @@
 @ECHO OFF
 
+REM Author : AVONTURE Christophe
+
 setlocal enabledelayedexpansion enableextensions
 
-REM ------------------------------------------------------------
-REM - PHP-CodeSniffer - Start CodeSniffer on each subfolder of -
-REM - the current working and automatically correct coding     -
-REM - standard violations                                      -
-REM - @see https://github.com/squizlabs/PHP_CodeSniffer        -
-REM ------------------------------------------------------------
+REM Define global variables
+SET PROGNAME=PHPCBF
+SET GITHUB=https://github.com/squizlabs/PHP_CodeSniffer
+SET COMPOSER=squizlabs/php_codesniffer
+SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpcbf.bat
+SET BATCH=%~n0%~x0
 
 CLS
 
 ECHO ===============================================================
-ECHO = Running PHPCBF - PHP-CodeSniffer CBF                        =
+ECHO = Running %PROGNAME% - PHP-CodeSniffer CBF                        =
 ECHO = PHP_CodeSniffer automatic coding standard violations fixer  =
-ECHO = @see https://github.com/squizlabs/PHP_CodeSniffer           =
+ECHO = @see %GITHUB%           =
 ECHO ===============================================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
 if "%1"=="-?" GOTO :HELP
 if "%1"=="-h" GOTO :HELP
+
+IF NOT EXIST %SCRIPT% (
+    GOTO NOTINSTALLED:
+)
 
 REM Check the if the script was called with a parameter and
 REM in that case, this parameter is the name of a folder to scan
@@ -120,32 +126,41 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
-REM Be sure that PHP_CodeSniffer (https://github.com/squizlabs/PHP_CodeSniffer)
-REM has been installed globally by using, first,
-REM composer global require squizlabs/php_codesniffer
-REM If not, php-cs-fixer won't be retrieved in the %APPDATA% folder
-
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO     --standard=%configFile% (configuration file used)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phpcbf --standard=%configFile% %1 %2
+CALL %SCRIPT% --standard=%configFile% %1 %2
 
 GOTO:EOF
+
+::--------------------------------------------------------
+::-- Not installed
+::--------------------------------------------------------
+:NOTINSTALLED
+
+ECHO %PROGNAME% (%GITHUB%) is not installed
+ECHO on your machine. Please run the following command from a DOS prompt:
+ECHO.
+ECHO composer global require %COMPOSER%
+ECHO.
+ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
+
+GOTO END:
 
 ::--------------------------------------------------------
 ::-- Show help instructions
 ::--------------------------------------------------------
 :HELP
 
-ECHO phpcbf.bat [-h] [foldername]
+ECHO %BATCH% [-h] [foldername]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phpcbf.bat Classes" for scanning only the Classes folder (case
+ECHO for instance, "%BATCH% Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
 ECHO.
 ECHO Remarks

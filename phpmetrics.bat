@@ -1,24 +1,32 @@
 @ECHO OFF
 
+REM Author : AVONTURE Christophe
+
 setlocal enabledelayedexpansion enableextensions
 
-REM -------------------------------------------------
-REM - PHPMetrics - Static analysis tool for PHP     -
-REM - @see https://github.com/phpmetrics/PhpMetrics -
-REM -------------------------------------------------
+REM Define global variables
+SET PROGNAME=PHPMetrics
+SET GITHUB=https://github.com/phpmetrics/PhpMetrics
+SET COMPOSER=phpmetrics/phpmetrics
+SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpmetrics.bat
+SET BATCH=%~n0%~x0
 
 CLS
 
-ECHO ================================================
-ECHO = Running PHPMetrics                           =
-ECHO = Static analysis tool f PHP                   =
-ECHO = @see https://github.com/phpmetrics/PhpMetric =
-ECHO ================================================
+ECHO =================================================
+ECHO = Running %PROGNAME%                            =
+ECHO = Static analysis tool for PHP                  =
+ECHO = @see %GITHUB% =
+ECHO =================================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
 if "%1"=="-?" GOTO :HELP
 if "%1"=="-h" GOTO :HELP
+
+IF NOT EXIST %SCRIPT% (
+    GOTO NOTINSTALLED:
+)
 
 CALL :fnProcessFolder %cd%
 
@@ -31,11 +39,6 @@ GOTO END:
 
 ECHO Process folder %1
 ECHO.
-
-REM Be sure that PHPMetrics (https://github.com/phpmetrics/PhpMetrics)
-REM has been installed globally by using, first,
-REM composer global require phpmetrics/phpmetrics
-REM If not, phpmetrics won't be retrieved in the %APPDATA% folder
 
 REM Define the name for the output folder
 SET outputFolder=%tmp%\phpmetrics
@@ -50,23 +53,38 @@ ECHO     %1 (scanned folder)
 ECHO     --report-html=%outputFolder% (output folder)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phpmetrics %1 --report-html=%outputFolder%
+CALL %SCRIPT% %1 --report-html=%outputFolder%
 
 START chrome.exe %outputFolder%\index.html
 
 GOTO:EOF
 
 ::--------------------------------------------------------
+::-- Not installed
+::--------------------------------------------------------
+:NOTINSTALLED
+
+ECHO %PROGNAME% (%GITHUB%) is not installed
+ECHO on your machine. Please run the following command from a DOS prompt:
+ECHO.
+ECHO composer global require %COMPOSER%
+ECHO.
+ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
+
+GOTO END:
+
+::--------------------------------------------------------
 ::-- Show help instructions
 ::--------------------------------------------------------
 :HELP
 
-ECHO phpmetrics.bat [-h]
+ECHO %BATCH% [-h]
 ECHO.
 ECHO -h : to get this screen
 
 GOTO END:
 
 :END
+
 ECHO.
 ECHO End

@@ -1,24 +1,32 @@
 @ECHO OFF
 
+REM Author : AVONTURE Christophe
+
 setlocal enabledelayedexpansion enableextensions
 
-REM ---------------------------------------
-REM - PHPMD - PHP Mess Detector           -
-REM - @see https://github.com/phpmd/phpmd -
-REM ---------------------------------------
+REM Define global variables
+SET PROGNAME=PHPMD
+SET GITHUB=https://github.com/phpmd/phpmd
+SET COMPOSER=phpmd/phpmd
+SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpmd
+SET BATCH=%~n0%~x0
 
 CLS
 
 ECHO =======================================
-ECHO = Running PHPMD                       =
+ECHO = Running %PROGNAME%                       =
 ECHO = PHP Mess Detector                   =
-ECHO = @see https://github.com/phpmd/phpmd =
+ECHO = @see %GITHUB% =
 ECHO =======================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
 if "%1"=="-?" GOTO :HELP
 if "%1"=="-h" GOTO :HELP
+
+IF NOT EXIST %SCRIPT% (
+    GOTO NOTINSTALLED:
+)
 
 REM Check the if the script was called with a parameter and
 REM in that case, this parameter is the name of a folder to scan
@@ -116,11 +124,6 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
-REM Be sure that PHPMD (https://github.com/phpmd/phpmd)
-REM has been installed globally by using, first,
-REM composer global require phpmd/phpmd
-REM If not, phpmd won't be retrieved in the %APPDATA% folder
-
 REM Define the name for the logfile for the analyzed folder
 SET outputFile=%tmp%\phpmd_%1.html
 
@@ -136,7 +139,7 @@ ECHO     %configFile% (for the configuration file)
 ECHO     --reportfile %outputFile% (output filename)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phpmd %1 html %configFile% --reportfile %outputFile%
+CALL %SCRIPT% %1 html %configFile% --reportfile %outputFile%
 
 REM Open Chrome; use START and not CALL because START will not wait by default
 REM but only when there is something in the log
@@ -161,17 +164,31 @@ SET fileSize=%~z1
 GOTO:EOF
 
 ::--------------------------------------------------------
+::-- Not installed
+::--------------------------------------------------------
+:NOTINSTALLED
+
+ECHO %PROGNAME% (%GITHUB%) is not installed
+ECHO on your machine. Please run the following command from a DOS prompt:
+ECHO.
+ECHO composer global require %COMPOSER%
+ECHO.
+ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
+
+GOTO END:
+
+::--------------------------------------------------------
 ::-- Show help instructions
 ::--------------------------------------------------------
 :HELP
 
-ECHO phpmd.bat [-h] [foldername]
+ECHO %BATCH% [-h] [foldername]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phpmd.bat Classes" for scanning only the Classes folder (case
+ECHO for instance, "%BATCH% Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
 ECHO.
 ECHO Remarks

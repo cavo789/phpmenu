@@ -1,24 +1,32 @@
 @ECHO OFF
 
+REM Author : AVONTURE Christophe
+
 setlocal enabledelayedexpansion enableextensions
 
-REM ---------------------------------------
-REM - PHPMND - PHP Magical Number         -
-REM - @see https://github.com/povils/phpmnd -
-REM ---------------------------------------
+REM Define global variables
+SET PROGNAME=PHPMND
+SET GITHUB=https://github.com/povils/phpmnd
+SET COMPOSER=povils/phpmnd
+SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpmnd.bat
+SET BATCH=%~n0%~x0
 
 CLS
 
 ECHO =========================================
-ECHO = Running PHPMND                        =
+ECHO = Running %PROGNAME%                        =
 ECHO = PHP Magical Number                    =
-ECHO = @see https://github.com/povils/phpmnd =
+ECHO = @see %GITHUB% =
 ECHO =========================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
 if "%1"=="-?" GOTO :HELP
 if "%1"=="-h" GOTO :HELP
+
+IF NOT EXIST %SCRIPT% (
+    GOTO NOTINSTALLED:
+)
 
 REM Get the folder of this current script.
 REM Suppose that the ruleset.xml configuration file can be retrieved
@@ -38,26 +46,34 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
-REM Be sure that PHPMND (https://github.com/povils/phpmnd)
-REM has been installed globally by using, first,
-REM composer global require povils/phpmnd
-REM If not, phpmnd won't be retrieved in the %APPDATA% folder
-
-
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phpmnd %1 --process --hint
+CALL %SCRIPT% %1 --progress --hint
 
 GOTO:EOF
+
+::--------------------------------------------------------
+::-- Not installed
+::--------------------------------------------------------
+:NOTINSTALLED
+
+ECHO %PROGNAME% (%GITHUB%) is not installed
+ECHO on your machine. Please run the following command from a DOS prompt:
+ECHO.
+ECHO composer global require %COMPOSER%
+ECHO.
+ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
+
+GOTO END:
 
 ::--------------------------------------------------------
 ::-- Show help instructions
 ::--------------------------------------------------------
 :HELP
 
-ECHO phpmnd.bat [-h]
+ECHO %BATCH% [-h]
 ECHO.
 ECHO -h : to get this screen
 ECHO.

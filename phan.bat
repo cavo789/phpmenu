@@ -1,25 +1,32 @@
 @ECHO OFF
 
+REM Author : AVONTURE Christophe
+
 setlocal enabledelayedexpansion enableextensions
 
-REM --------------------------------------------------
-REM - PHAN - Scan all folders of the current working -
-REM - directory and report errors                    -
-REM - @see https://github.com/phan/phan              -
-REM --------------------------------------------------
+REM Define global variables
+SET PROGNAME=PHAN
+SET GITHUB=https://github.com/phan/phan
+SET COMPOSER=phan/phan
+SET SCRIPT=%APPDATA%\Composer\vendor\bin\phan.bat
+SET BATCH=%~n0%~x0
 
 CLS
 
 ECHO ======================================
-ECHO = Running PHAN                       =
+ECHO = Running %PROGNAME%                       =
 ECHO = Phan is a static analyzer for PHP. =
-ECHO = @see https://github.com/phan/phan  =
+ECHO = @see %GITHUB%  =
 ECHO ======================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
 if "%1"=="-?" GOTO :HELP
 if "%1"=="-h" GOTO :HELP
+
+IF NOT EXIST %SCRIPT% (
+    GOTO NOTINSTALLED:
+)
 
 REM Check the if the script was called with a parameter and
 REM in that case, this parameter is the name of a folder to scan
@@ -160,7 +167,7 @@ REM ECHO     --exclude-directory-list %ignore%
 ECHO     --config-file %configFile% (configuration file used)
 ECHO.
 
-CALL %APPDATA%\Composer\vendor\bin\phan.bat -o %outputFile% --config-file %configFile% -l %1
+CALL %SCRIPT% -o %outputFile% --config-file %configFile% -l %1
 
 REM Open Notepad; use START and not CALL because START will not wait by default
 REM but only when there is something in the log
@@ -194,17 +201,31 @@ SET fileSize=%~z1
 GOTO:EOF
 
 ::--------------------------------------------------------
+::-- Not installed
+::--------------------------------------------------------
+:NOTINSTALLED
+
+ECHO %PROGNAME% (%GITHUB%) is not installed
+ECHO on your machine. Please run the following command from a DOS prompt:
+ECHO.
+ECHO composer global require %COMPOSER%s
+ECHO.
+ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
+
+GOTO END:
+
+::--------------------------------------------------------
 ::-- Show help instructions
 ::--------------------------------------------------------
 :HELP
 
-ECHO phan.bat [-h] [foldername]
+ECHO %BATCH% [-h] [foldername]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phan.bat Classes" for scanning only the Classes folder (case
+ECHO for instance, "%BATCH% Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
 ECHO.
 ECHO Remarks

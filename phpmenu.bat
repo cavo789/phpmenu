@@ -1,17 +1,18 @@
 @ECHO OFF
 
+REM Author : AVONTURE Christophe
+
 setlocal enabledelayedexpansion enableextensions
 
-REM -----------------------------------
-REM - Show a menu for running scripts -
-REM -----------------------------------
+REM Define global variables
+SET BATCH=%~n0%~x0
 
 CLS
 
-ECHO ======================================
-ECHO = PHPMENU                            =
-ECHO = Which scripts do you want to start =
-ECHO ======================================
+ECHO =======================================
+ECHO = PHPMENU                             =
+ECHO = Which scripts do you want to start? =
+ECHO =======================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
@@ -22,6 +23,12 @@ REM Check the if the script was called with a parameter and
 REM in that case, this parameter is the name of a folder to scan
 REM (scanOnlyFolderName will be empty or f.i. equal to "classes", a folder name)
 SET scanOnlyFolderName=%1
+
+REM Get the folder of this current script.
+REM Suppose that the .php-cs configuration file can be retrieved
+REM from the current "script" folder which can be different of the
+REM current working directory
+SET ScriptFolder=%~dp0
 
 :MENU
 
@@ -57,7 +64,7 @@ ECHO.
 ECHO  0. Exit
 ECHO.
 
-SET /P answer="Please make a choice? " 0-10
+SET /P answer="Please make a choice? " 0-11
 
 REM IF /I for case insensitive check
 IF /I "%answer%"=="1" GOTO :PHAN
@@ -76,57 +83,57 @@ GOTO :END
 
 :PHAN
 CLS
-CALL phan.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phan.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPSTAN
 CLS
-CALL phpstan.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phpstan.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPCPD
 CLS
-CALL phpcpd.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phpcpd.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPCS
 CLS
-CALL phpcs.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phpcs.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPMD
 CLS
-CALL phpmd.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phpmd.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPMND
 CLS
-CALL phpmnd.bat
+CALL %ScriptFolder%\phpmnd.bat
 GOTO :END
 
 :PHPMETRICS
 CLS
-CALL phpmetrics.bat
+CALL %ScriptFolder%\phpmetrics.bat
 GOTO :END
 
 :PHPUNIT
 CLS
-CALL phpunit.bat
+CALL %ScriptFolder%\phpunit.bat
 GOTO :END
 
 :PHPCBF
 CLS
-CALL phpcbf.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phpcbf.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPCSFIXER
 CLS
-CALL php-cs-fixer.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\php-cs-fixer.bat %scanOnlyFolderName%
 GOTO :END
 
 :PHPLOC
 CLS
-CALL phploc.bat %scanOnlyFolderName%
+CALL %ScriptFolder%\phploc.bat %scanOnlyFolderName%
 GOTO :END
 
 ::--------------------------------------------------------
@@ -134,13 +141,13 @@ GOTO :END
 ::--------------------------------------------------------
 :HELP
 
-ECHO phpmenu.bat [-h] [foldername]
+ECHO %BATCH% [-h] [foldername]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
 ECHO foldername : if you want to process all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
-ECHO for instance, "phpmenu.bat Classes" for processing only the Classes folder (case
+ECHO for instance, "%BATCH% Classes" for processing only the Classes folder (case
 ECHO not sensitive).
 ECHO.
 
