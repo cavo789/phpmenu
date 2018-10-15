@@ -51,23 +51,25 @@ ECHO     5. Start PHPMD (Start PHP Mess Detector) shortcut: phpmd.bat %scanOnlyF
 ECHO     6. Start PHPMND (Start PHP Magical Number) shortcut: phpmnd.bat
 ECHO     7. Start PHP Metrics (Start Static analysis tool for PHP) shortcut: phpmetrics.bat
 ECHO.
+ECHO    10. Start  Check compatibility PHP 7.2 shortcut: phpcompatibility.bat
+ECHO.
 ECHO   Testing tools
-ECHO     8. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
+ECHO    15. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
 ECHO.
 ECHO   Fixed standard violation
-ECHO     9. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
-ECHO    10. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
+ECHO    20. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
+ECHO    21. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
 ECHO.
 ECHO   Statistics
-ECHO    11. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
+ECHO    25. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
 ECHO.
 ECHO   Documentation
-ECHO    20. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
+ECHO    30. Start PHPDOC (generate documentation) shortcut: phpdoc.bat %scanOnlyFolderName%
 ECHO.
 ECHO  0. Exit
 ECHO.
 
-SET /P answer="Please make a choice? " 0-20
+SET /P answer="Please make a choice? " 0-30
 
 REM IF /I for case insensitive check
 IF /I "%answer%"=="1" GOTO :PHAN
@@ -77,11 +79,12 @@ IF /I "%answer%"=="4" GOTO :PHPCS
 IF /I "%answer%"=="5" GOTO :PHPMD
 IF /I "%answer%"=="6" GOTO :PHPMND
 IF /I "%answer%"=="7" GOTO :PHPMETRICS
-IF /I "%answer%"=="8" GOTO :PHPUNIT
-IF /I "%answer%"=="9" GOTO :PHPCBF
-IF /I "%answer%"=="10" GOTO :PHPCSFIXER
-IF /I "%answer%"=="11" GOTO :PHPLOC
-IF /I "%answer%"=="20" GOTO :PHPDOC
+IF /I "%answer%"=="10" GOTO :PHPCOMPATIBILITY
+IF /I "%answer%"=="15" GOTO :PHPUNIT
+IF /I "%answer%"=="20" GOTO :PHPCBF
+IF /I "%answer%"=="21" GOTO :PHPCSFIXER
+IF /I "%answer%"=="25" GOTO :PHPLOC
+IF /I "%answer%"=="30" GOTO :PHPDOC
 
 GOTO :END
 
@@ -118,6 +121,16 @@ GOTO :END
 :PHPMETRICS
 CLS
 CALL %ScriptFolder%\phpmetrics.bat
+GOTO :END
+
+:PHPCOMPATIBILITY
+CLS
+IF "%scanOnlyFolderName%" EQU "" (
+    CALL %ScriptFolder%\phpcompatibility.bat . 7.2
+) ELSE (
+    CALL %ScriptFolder%\phpcompatibility.bat %scanOnlyFolderName% 7.2
+)
+
 GOTO :END
 
 :PHPUNIT

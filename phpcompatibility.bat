@@ -5,21 +5,20 @@ REM Author : AVONTURE Christophe
 setlocal enabledelayedexpansion enableextensions
 
 REM Define global variables
-SET PROGNAME=PHPCS
-SET GITHUB=https://github.com/squizlabs/PHP_CodeSniffer
-SET COMPOSER=squizlabs/php_codesniffer
+SET PROGNAME=PHP Compatibility
+SET GITHUB=https://github.com/PHPCompatibility/PHPCompatibility
+SET COMPOSER=phpcompatibility/php-compatibility
 SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpcs.bat
 SET BATCH=%~n0%~x0
 
 CLS
 
-ECHO =====================================================
-ECHO = Running %PROGNAME% - PHP-CodeSniffer                   =
-ECHO = PHP_CodeSniffer tokenizes PHP, JavaScript and     =
-ECHO = CSS files and detects violations of a defined     =
-ECHO = set of coding standards.                          =
+ECHO =============================================================
+ECHO = Running %PROGNAME% with PHP-CodeSniffer            =
+ECHO = PHP Check compatibility                                   =
+ECHO = Make sure PHPCS is already installed                      =
 ECHO = @see %GITHUB% =
-ECHO =====================================================
+ECHO =============================================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
@@ -30,26 +29,29 @@ IF NOT EXIST %SCRIPT% (
     GOTO NOTINSTALLED:
 )
 
+IF NOT EXIST %APPDATA%\Composer\vendor\phpcompatibility (
+    GOTO NOTINSTALLED:
+)
+
 REM Check the if the script was called with a parameter and
 REM in that case, this parameter is the name of a folder to scan
 REM (scanOnlyFolderName will be empty or f.i. equal to "classes", a folder name)
 SET scanOnlyFolderName=%1
+IF "%scanOnlyFolderName%" EQU "." (
+    SET scanOnlyFolderName=
+)
+
+REM
+SET phpVERSION=%2
+IF "%phpVERSION%" equ "" (
+    SET phpVERSION=7.2
+)
 
 REM Get the folder of this current script.
 REM Suppose that the ruleset.xml configuration file can be retrieved
 REM from the current "script" folder which can be different of the
 REM current working directory
 SET ScriptFolder=%~dp0
-
-REM For phpcs, check if we've a file ruleset.xml in the current
-REM working directory i.e. the one of the project.
-REM If so, use that configuration file.
-REM If not, use the ruleset.xml present in the folder of the phpcs.bat
-REM script
-SET configFile=%cd%\ruleset.xml
-IF NOT EXIST %configFile% (
-    SET configFile=%ScriptFolder%ruleset.xml
-)
 
 REM -------------------------------------------------------
 REM - Populate the list of folders that should be ignored -
@@ -114,14 +116,6 @@ FOR /d %%d IN (*.*) DO (
     )
 )
 
-REM And process the root folder
-
-REM -l
-REM    Local directory only, no recursion
-IF "%scanOnlyFolderName%" EQU "" (
-    CALL :fnProcessFolder . -l
-)
-
 GOTO END:
 
 ::--------------------------------------------------------
@@ -143,11 +137,11 @@ IF EXIST %outputFile% (
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
-ECHO     --standard=%configFile% (configuration file used)
+ECHO     testVersion %phpVERSION% (PHP version to check)
 ECHO.
 
 REM CALL %SCRIPT% --config-set installed_paths %APPDATA%\Composer\vendor\phpcompatibility\php-compatibility\PHPCompatibility
-CALL %SCRIPT% --standard=%configFile% %1 %2 >> %outputFile%
+CALL %SCRIPT% %1 --standard=%APPDATA%\Composer\vendor\phpcompatibility\php-compatibility\PHPCompatibility --runtime-set testVersion %phpVERSION% >> %outputFile%
 
 REM Open Notepad; use START and not CALL because START will not wait by default
 REM but only when there is something in the log
@@ -184,7 +178,10 @@ ECHO on your machine. Please run the following command from a DOS prompt:
 ECHO.
 ECHO composer global require %COMPOSER%
 ECHO.
-ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
+ECHO Make also sure that you've PHPCS installed:
+ECHO.
+ECHO composer global require squizlabs/php_codesniffer
+ECHO.
 
 GOTO END:
 
@@ -193,7 +190,7 @@ GOTO END:
 ::--------------------------------------------------------
 :HELP
 
-ECHO %BATCH% [-h] [foldername]
+ECHO %BATCH% [-h] [foldername] [php_version]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
@@ -201,12 +198,9 @@ ECHO foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
 ECHO for instance, "%BATCH% Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
-ECHO.
-ECHO Remarks
-ECHO -------
-ECHO.
-ECHO If you want to use your own configuration file; create a ruleset.xml file
-ECHO in your project's folder.
+ECHO
+ECHO php_version : the version to check for instance, "%BATCH% Classes 7.2" for checking
+ECHO the compatibility of the folder for PHP 7.2.
 
 GOTO END:
 
