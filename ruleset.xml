@@ -3,13 +3,16 @@
     <description>The PSR-12 coding standard.</description>
     <arg name="tab-width" value="4"/>
 
+	<config name="testVersion" value="7.2" />
+	<rule ref="PHPCompatibility"/>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
     <!-- 2. General -->
 
     <!-- 2.1 Basic Coding Standard -->
 
     <!-- Code MUST follow all rules outlined in PSR-1. -->
     <rule ref="PSR1"/>
-	
 
     <!-- 2.2 Files -->
 
