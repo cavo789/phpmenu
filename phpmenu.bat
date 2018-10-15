@@ -61,10 +61,13 @@ ECHO.
 ECHO   Statistics
 ECHO    11. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
 ECHO.
+ECHO   Documentation
+ECHO    20. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
+ECHO.
 ECHO  0. Exit
 ECHO.
 
-SET /P answer="Please make a choice? " 0-11
+SET /P answer="Please make a choice? " 0-20
 
 REM IF /I for case insensitive check
 IF /I "%answer%"=="1" GOTO :PHAN
@@ -78,6 +81,7 @@ IF /I "%answer%"=="8" GOTO :PHPUNIT
 IF /I "%answer%"=="9" GOTO :PHPCBF
 IF /I "%answer%"=="10" GOTO :PHPCSFIXER
 IF /I "%answer%"=="11" GOTO :PHPLOC
+IF /I "%answer%"=="20" GOTO :PHPDOC
 
 GOTO :END
 
@@ -134,6 +138,11 @@ GOTO :END
 :PHPLOC
 CLS
 CALL %ScriptFolder%\phploc.bat %scanOnlyFolderName%
+GOTO :END
+
+:PHPDOC
+CLS
+CALL %ScriptFolder%\phpdoc.bat %scanOnlyFolderName%
 GOTO :END
 
 ::--------------------------------------------------------

@@ -50,12 +50,34 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
+REM Define the name for the logfile for the analyzed folder
+REM Will be phpstan_FOLDERNAME.log
+CALL :getBaseName %1
+SET outputFile=%tmp%\phploc_%BaseName%.log
+
+REM Remove previous file just to be sure that an old version won't remains
+IF EXIST %outputFile% (
+    DEL %outputFile%
+)
+
+
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO     --exclude vendor
 ECHO.
 
-CALL %SCRIPT% %1 --exclude vendor
+CALL %SCRIPT% %1 --exclude vendor > %outputFile%
+
+START chrome.exe %outputFile%
+
+GOTO:EOF
+
+::--------------------------------------------------------
+::-- getBaseName - Get basename of a file/folder
+::-- Return tests f.i. from C:\root\folder\tests
+::--------------------------------------------------------
+:getBaseName
+SET getBaseName=%~n1
 
 GOTO:EOF
 

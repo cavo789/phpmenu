@@ -21,8 +21,9 @@ ECHO ===========================================
 ECHO.
 
 IF "%1"=="/?" GOTO :HELP
-if "%1"=="-?" GOTO :HELP
-if "%1"=="-h" GOTO :HELP
+IF "%1"=="-?" GOTO :HELP
+IF /I "%1"=="-h" GOTO :HELP
+
 
 IF NOT EXIST %SCRIPT% (
     GOTO NOTINSTALLED:
@@ -37,6 +38,12 @@ IF "%1" NEQ "" (
 	SET scanFolderName=%cd%\%1
 )
 
+REM Get the rule level. 0 is the loosest and 7 is the strictest.
+REM "max" is an alias for the highest level
+SET LogLevel=3
+IF NOT "%2" =="" (
+    SET LogLevel=%2
+)
 
 REM Get the folder of this current script.
 REM Suppose that the ruleset.xml configuration file can be retrieved
@@ -49,9 +56,24 @@ REM working directory i.e. the one of the project phpstan.neon
 REM If so, use that configuration file.
 REM If not, use the phpstan.neon present in the folder of the phpstan.bat
 REM script
-SET configFile=%cd%\phpstan.neon
-IF NOT EXIST %configFile% (
-    SET configFile=%ScriptFolder%phpstan.neon
+SET CurrentFolder=%cd%
+
+SET configFile=%CurrentFolder%\phpstan.neon
+
+IF "%LogLevel%"=="max" (
+    REM Use the MAX level file
+    SET configFile=%CurrentFolder%\phpstanMax.neon
+
+    IF NOT EXIST %configFile% (
+        SET configFile=%ScriptFolder%phpstanMax.neon
+    )
+) ELSE (
+    REM Use standard level from 0 till 7
+    SET configFile=%CurrentFolder%\phpstan.neon
+
+    IF NOT EXIST %configFile% (
+        SET configFile=%ScriptFolder%phpstan.neon
+    )
 )
 
 REM Process the folder
@@ -72,11 +94,54 @@ REM is https://github.com/phpstan/phpstan#rule-levels
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
-ECHO     --level max (max level of checks)
+ECHO     --level %LogLevel%
 ECHO     -c %configFile% (configuration file used)
 ECHO.
 
-CALL %SCRIPT% analyze %1 --level max -c %configFile%
+REM Define the name for the logfile for the analyzed folder
+REM Will be phpstan_FOLDERNAME.log
+CALL :getBaseName %1
+SET outputFile=%tmp%\phpstan_%BaseName%.log
+
+REM Remove previous file just to be sure that an old version won't remains
+IF EXIST %outputFile% (
+    DEL %outputFile%
+)
+
+REM Start PHPSTAN
+CALL %SCRIPT% analyze %1 --level %LogLevel% -c %configFile% >> %outputFile%
+
+REM Open Notepad; use START and not CALL because START will not wait by default
+REM but only when there is something in the log
+CALL :setFileSize %outputFile%
+
+REM When the output logfile is empty, perfect, otherwise open Notepad
+if %fileSize% LSS 1 (
+    ECHO *** Wonderful! Everything is OK in folder %1 ***
+) ELSE (
+    REM !!! Warnings found in folder %1 !!!
+    START notepad %outputFile%
+)
+
+ECHO.
+
+GOTO:EOF
+
+::--------------------------------------------------------
+::-- setFileSize - Get file size
+::-- Should be called with the full filename as parameter
+::--------------------------------------------------------
+:setFileSize
+SET fileSize=%~z1
+
+GOTO:EOF
+
+::--------------------------------------------------------
+::-- getBaseName - Get basename of a file/folder
+::-- Return tests f.i. from C:\root\folder\tests
+::--------------------------------------------------------
+:getBaseName
+SET getBaseName=%~n1
 
 GOTO:EOF
 
@@ -99,14 +164,19 @@ GOTO END:
 ::--------------------------------------------------------
 :HELP
 
-ECHO %BATCH% [-h] [foldername]
+ECHO %BATCH% [-h] 
+ECHO or
+ECHO %BATCH% [foldername] [level]
 ECHO.
 ECHO -h : to get this screen
 ECHO.
-ECHO foldername : if you want to scan all subfolders of your project, don't
+ECHO 1. foldername : if you want to scan all subfolders of your project, don't
 ECHO specify a foldername. If you want to scan only one, mention his name like,
 ECHO for instance, "%BATCH% Classes" for scanning only the Classes folder (case
 ECHO not sensitive).
+ECHO.
+ECHO 2. rules level : PHPSTAN Rule levels can be from 0 (the loosest) till 7 (the strictest)
+ECHO Default is "3"
 ECHO.
 ECHO Remarks
 ECHO -------

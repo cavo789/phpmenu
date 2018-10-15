@@ -132,12 +132,45 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
+REM Define the name for the logfile for the analyzed folder
+REM Will be phpcs_FOLDERNAME.log
+SET outputFile=%tmp%\phpcs_%1.log
+
+REM Remove previous file just to be sure that an old version won't remains
+IF EXIST %outputFile% (
+    DEL %outputFile%
+)
+
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO     --standard=%configFile% (configuration file used)
 ECHO.
 
-CALL %SCRIPT% --standard=%configFile% %1 %2
+CALL %SCRIPT% --standard=%configFile% %1 %2 >> %outputFile%
+
+REM Open Notepad; use START and not CALL because START will not wait by default
+REM but only when there is something in the log
+CALL :setFileSize %outputFile%
+
+REM When the output logfile is empty, perfect, otherwise open Notepad
+if %fileSize% LSS 1 (
+    ECHO *** Wonderful! Everything is OK in folder %1 ***
+) ELSE (
+    REM !!! Warnings found in folder %1 !!!
+    START notepad %outputFile%
+)
+
+ECHO.
+
+GOTO:EOF
+
+::--------------------------------------------------------
+::-- setFileSize - Get file size
+::-- Should be called with the full filename as parameter
+::--------------------------------------------------------
+:setFileSize
+SET fileSize=%~z1
+
 GOTO:EOF
 
 ::--------------------------------------------------------

@@ -29,7 +29,7 @@ IF NOT EXIST %SCRIPT% (
 )
 
 REM Presume that unit testings are in a folder called "/Tests"
-SET scanFolderName=%cd%\Tests
+SET scanFolderName=%cd%\tests
 
 REM For phpunit, check if we've a file phpunit.xml in the current
 REM working directory i.e. the one of the project phpunit.xml
@@ -49,17 +49,17 @@ ECHO.
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
+ECHO     -- debug (Verbose mode, echo the name of fired functions)
 ECHO     --stop-on-failure (Stop execution upon first error or failure)
 ECHO     -v (Output more verbose information)
 ECHO     -c %configFile% (Configuration file used)
 ECHO.
 
-
 IF "%configFile%" NEQ "" (
-    CALL %SCRIPT% %scanFolderName% --colors=auto --stop-on-failure -c %configFile%
+    CALL %SCRIPT% %scanFolderName% --debug --colors=auto --stop-on-failure -c %configFile%
 ) ELSE (
     REM No phpunit.xml found
-    CALL %SCRIPT% %scanFolderName% --colors=auto --stop-on-failure
+    CALL %SCRIPT% %scanFolderName% --debug --colors=auto --stop-on-failure
 )
 
 GOTO:EOF

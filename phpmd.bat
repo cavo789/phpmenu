@@ -7,8 +7,7 @@ setlocal enabledelayedexpansion enableextensions
 REM Define global variables
 SET PROGNAME=PHPMD
 SET GITHUB=https://github.com/phpmd/phpmd
-SET COMPOSER=phpmd/phpmd
-SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpmd
+SET SCRIPT=%APPDATA%\Composer\vendor\bin\phpmd.phar
 SET BATCH=%~n0%~x0
 
 CLS
@@ -134,12 +133,12 @@ IF EXIST %outputFile% (
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
-ECHO     html (for the report format)
+ECHO     html (for the report format (can be xml, text, html))
 ECHO     %configFile% (for the configuration file)
 ECHO     --reportfile %outputFile% (output filename)
 ECHO.
 
-CALL %SCRIPT% %1 html %configFile% --reportfile %outputFile%
+CALL php %SCRIPT% %1 html %configFile% --reportfile %outputFile%
 
 REM Open Chrome; use START and not CALL because START will not wait by default
 REM but only when there is something in the log
@@ -169,11 +168,11 @@ GOTO:EOF
 :NOTINSTALLED
 
 ECHO %PROGNAME% (%GITHUB%) is not installed
-ECHO on your machine. Please run the following command from a DOS prompt:
+ECHO on your machine. Since phpMD should be installed manually, please do:
 ECHO.
-ECHO composer global require %COMPOSER%
+ECHO 1. Download http://static.phpmd.org/php/latest/phpmd.phar
+ECHO 2. Go to your `%APPDATA%\Composer\Vendor\Bin\` folder and save the file there 
 ECHO.
-ECHO After a while, the program will be installed in your %APPDATA%\Composer folder.
 
 GOTO END:
 

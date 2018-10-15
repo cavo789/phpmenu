@@ -1,4 +1,6 @@
 .git
 .phan
 .vscode
+build
+docs
 vendor

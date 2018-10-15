@@ -52,9 +52,10 @@ ECHO.
 
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
+ECHO     --exclude vendor (exclude folder)
 ECHO.
 
-CALL %SCRIPT% %1
+CALL %SCRIPT% %1 --exclude vendor --progress
 
 GOTO:EOF
 
