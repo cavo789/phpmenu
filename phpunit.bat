@@ -40,27 +40,16 @@ SET configFile=%cd%\phpunit.xml
 IF NOT EXIST %configFile% (
     SET configFile=%ScriptFolder%phpunit.xml
 )
-IF NOT EXIST %configFile% (
-    SET configFile=
-)
 
-ECHO Process folder %1
+ECHO Process folder %scanFolderName%
 ECHO.
 
 REM ECHO Command line options are
-ECHO     %1 (scanned folder)
-ECHO     -- debug (Verbose mode, echo the name of fired functions)
-ECHO     --stop-on-failure (Stop execution upon first error or failure)
-ECHO     -v (Output more verbose information)
+ECHO     %scanFolderName% (scanned folder)
 ECHO     -c %configFile% (Configuration file used)
 ECHO.
 
-IF "%configFile%" NEQ "" (
-    CALL %SCRIPT% %scanFolderName% --debug --colors=auto --stop-on-failure -c %configFile%
-) ELSE (
-    REM No phpunit.xml found
-    CALL %SCRIPT% %scanFolderName% --debug --colors=auto --stop-on-failure
-)
+CALL %SCRIPT% %scanFolderName% c %configFile% --debug
 
 GOTO:EOF
 

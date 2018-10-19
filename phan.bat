@@ -49,6 +49,13 @@ IF NOT EXIST %configFile% (
     SET configFile=%ScriptFolder%.phan\config.php
 )
 
+REM If the script is started with a dot as folder to check, 
+REM it means: run accross all folders so just do it and job is done
+IF "%scanOnlyFolderName%" EQU "." (
+    CALL :fnProcessFolder .
+    GOTO END:
+)
+
 REM Initialize the list of folders that should be ignored
 REM @see https://stackoverflow.com/a/18869970/1065340
 
@@ -152,7 +159,10 @@ REM -b, --backward-compatibility-checks
 REM    Check for potential PHP 5 -> PHP 7 BC issues
 
 REM Define the name for the logfile for the analyzed folder
-SET outputFile=%tmp%\phan_%1.log
+SET outputFile=%tmp%\phan.log
+IF "%1" NEQ "." (
+    SET outputFile=%tmp%\phan_%1.log
+)
 
 REM Remove previous file just to be sure that an old version won't remains
 IF EXIST %outputFile% (

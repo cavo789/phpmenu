@@ -144,10 +144,11 @@ IF EXIST %outputFile% (
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO     --standard=%configFile% (configuration file used)
+ECHO     --ignore=*.min.css,*.min.js 
 ECHO.
 
 REM CALL %SCRIPT% --config-set installed_paths %APPDATA%\Composer\vendor\phpcompatibility\php-compatibility\PHPCompatibility
-CALL %SCRIPT% --standard=%configFile% %1 %2 >> %outputFile%
+CALL %SCRIPT% --standard=%configFile% %1 %2 --ignore=*.min.css,*.min.js >> %outputFile%
 
 REM Open Notepad; use START and not CALL because START will not wait by default
 REM but only when there is something in the log
