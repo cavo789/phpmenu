@@ -138,10 +138,11 @@ IF EXIST %outputFile% (
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
 ECHO     testVersion %phpVERSION% (PHP version to check)
+ECHO     --ignore=*.min.css,*.min.js 
 ECHO.
 
 REM CALL %SCRIPT% --config-set installed_paths %APPDATA%\Composer\vendor\phpcompatibility\php-compatibility\PHPCompatibility
-CALL %SCRIPT% %1 --standard=%APPDATA%\Composer\vendor\phpcompatibility\php-compatibility\PHPCompatibility --runtime-set testVersion %phpVERSION% >> %outputFile%
+CALL %SCRIPT% %1 --standard=%APPDATA%\Composer\vendor\phpcompatibility\php-compatibility\PHPCompatibility --runtime-set testVersion %phpVERSION% --ignore=*.min.css,*.min.js >> %outputFile%
 
 REM Open Notepad; use START and not CALL because START will not wait by default
 REM but only when there is something in the log

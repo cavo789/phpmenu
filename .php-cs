@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * This file is part of the xxxxxxx project.
+ * (c) SPF BOSA IOD AS - PHP Dev Team
+ * 2018 - 2018
+ */
+
 $header = <<<'EOF'
 This file is part of the xxxxxxx project.
 (c) SPF BOSA IOD AS - PHP Dev Team
@@ -23,7 +29,7 @@ return PhpCsFixer\Config::create()
         // Add a space in f.i. "if ($a===8)" so replace by "if ($a === 8)"
         'binary_operator_spaces' => [
             'align_double_arrow' => true,
-            'align_equals' => true,
+            'align_equals'       => true,
         ],
         // There MUST be one blank line after the namespace declaration.
         'blank_line_after_namespace' => true,
@@ -39,10 +45,10 @@ return PhpCsFixer\Config::create()
         //          return false;
         //      }
         'braces' => [
-            'allow_single_line_closure' => true,
-            'position_after_anonymous_constructs' => 'same',
+            'allow_single_line_closure'                   => true,
+            'position_after_anonymous_constructs'         => 'same',
             'position_after_functions_and_oop_constructs' => 'next',
-            'position_after_control_structures' => 'same',
+            'position_after_control_structures'           => 'same',
         ],
         // Class's definitions should be single line;
         'class_definition' => ['singleLine' => true],
@@ -70,10 +76,10 @@ return PhpCsFixer\Config::create()
         // Add a header in each PHP file, get the header from the $header
         // variable defined here above.
         // The location of the header should be after the declare_strict directive
-        'header_comment' => [
-            'header' => $header,
-            'location' => 'after_declare_strict'
-        ],
+        //'header_comment' => [
+        //    'header' => $header,
+        //    'location' => 'after_declare_strict'
+        //],
         // Include/Require and file path should be divided with a single space.
         // File path should not be placed under brackets
         'include' => true,
@@ -92,7 +98,7 @@ return PhpCsFixer\Config::create()
         // Use __DIR__ and __FILE__ not __dir__ or __file__
         'magic_constant_casing' => true,
         // Method chaining MUST be properly indented.
-        'method_chaining_indentation'=>true,
+        'method_chaining_indentation'=> true,
         // DocBlocks must start with two asterisks, multiline comments must start with a
         // single asterisk, after the opening slash. Both must end with a single asterisk
         // before the closing slash.
@@ -105,7 +111,7 @@ return PhpCsFixer\Config::create()
         'no_closing_tag' => true,
         // Remove empty comments
         'no_empty_comment' => true,
-        'no_empty_phpdoc' => true,
+        'no_empty_phpdoc'  => true,
         // Keep only one ";" so replace "$a = 1;;;" by "$a = 1;"
         'no_empty_statement' => true,
         // Removes extra blank lines and/or blank lines following configuration.
@@ -118,31 +124,31 @@ return PhpCsFixer\Config::create()
             'use',
             'parenthesis_brace_block',
             'square_brace_block',
-            'curly_brace_block'
+            'curly_brace_block',
         ],
         // No whitespace before the "namespace" word
         'no_leading_namespace_whitespace' => true,
         // Use echo and not print
-        'no_mixed_echo_print' => ['use' => 'echo'],
+        'no_mixed_echo_print'                         => ['use' => 'echo'],
         'no_multiline_whitespace_around_double_arrow' => true,
-        'no_multiline_whitespace_before_semicolons' => true,
+        'no_multiline_whitespace_before_semicolons'   => true,
         // Replace short-echo <?= with long format <?php echo syntax.
         'no_short_echo_tag' => true,
         // Short cast bool using double exclamation mark should not be used.
-        'no_short_bool_cast' => true,
-        'no_spaces_around_offset' => true,
+        'no_short_bool_cast'                         => true,
+        'no_spaces_around_offset'                    => true,
         'no_singleline_whitespace_before_semicolons' => true,
-        'no_trailing_comma_in_list_call' => true,
-        'no_trailing_comma_in_singleline_array' => true,
+        'no_trailing_comma_in_list_call'             => true,
+        'no_trailing_comma_in_singleline_array'      => true,
         // Remove unneeded whitespace at the end of the sentence
-        'no_trailing_whitespace' => true,
+        'no_trailing_whitespace'            => true,
         'no_trailing_whitespace_in_comment' => true,
         // Remove unneeded parentheses like in "echo ('Test')" and replace by "echo 'Test'"
         'no_unneeded_control_parentheses' => true,
         // There should not be an empty return statement at the end of a function.
-        'no_useless_return' => true,
+        'no_useless_return'                   => true,
         'no_whitespace_before_comma_in_array' => true,
-        'no_whitespace_in_blank_line' => true,
+        'no_whitespace_in_blank_line'         => true,
         // Array index should always be written by using square braces.
         'normalize_index_brace' => true,
         // Rewrite "$a   -> display()" to "$a->display()"
@@ -176,7 +182,7 @@ return PhpCsFixer\Config::create()
             'method_public_static',
             'method_protected_static',
             'method_private_static',
-            'phpunit'
+            'phpunit',
         ],
         // Ordering use statements
         'ordered_imports' => true,
@@ -193,15 +199,15 @@ return PhpCsFixer\Config::create()
         // Remove @inheritdoc tag
         'phpdoc_no_useless_inheritdoc' => true,
         // Reorder tags @param then @throws then @return
-        'phpdoc_order' => true,
+        'phpdoc_order'                 => true,
         'phpdoc_return_self_reference' => true,
         // Scalar types should always be written in the same form.
         // int not integer, bool not boolean, float not real or double.
         'phpdoc_scalar' => true,
         // Add a blank line between blocks (between description, @param, @throws, ...)
-        'phpdoc_separation' => true,
+        'phpdoc_separation'              => true,
         'phpdoc_single_line_var_spacing' => true,
-        'phpdoc_summary' => true,
+        'phpdoc_summary'                 => true,
         // Replace /** ... */ (i.e. a single line comment) to  /* ... */
         'phpdoc_to_comment' => true,
         // Remove unneeded empty lines in phpdoc

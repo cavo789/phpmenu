@@ -2,24 +2,23 @@
 
 > My dot files and configuration items / scripts. Remark: scripts are Windows batch files; won't work on other OS than Windows
 
-* [Install](#install)
-	* [Environnement variable - PATH](#environnement-variable---path)
-	* [Composer - Global](#composer---global)
-	* [File .phpmenu-ignore](#file-phpmenu-ignore)
-* [Usage](#usage)
-	* [PHPMENU](#phpmenu)
-	* [1. PHAN](#1-phan)
-	* [2. PHPStan](#2-phpstan)
-	* [3. PHPCPD](#3-phpcpd)
-	* [4. PHPCS](#4-phpcs)
-	* [5. PHPMD](#5-phpmd)
-	* [6. PHPMND](#6-phpmnd)
-	* [7. PHP Metrics](#7-php-metrics)
-	* [8. PHPUNIT](#8-phpunit)
-	* [9. PHPCBF](#9-phpcbf)
-	* [10. PHP-CS-FIXER](#10-php-cs-fixer)
-	* [11. PHPLOC](#11-phploc)
-* [License](#license)
+-   [Install](#install)
+    _ [Environnement variable - PATH](#environnement-variable---path)
+    _ [Composer - Global](#composer---global) \* [File .phpmenu-ignore](#file-phpmenu-ignore)
+-   [Usage](#usage)
+    _ [PHPMENU](#phpmenu)
+    _ [1. PHAN](#1-phan)
+    _ [2. PHPStan](#2-phpstan)
+    _ [3. PHPCPD](#3-phpcpd)
+    _ [4. PHPCS](#4-phpcs)
+    _ [5. PHPMD](#5-phpmd)
+    _ [6. PHPMND](#6-phpmnd)
+    _ [7. PHP Metrics](#7-php-metrics)
+    _ [8. PHPUNIT](#8-phpunit)
+    _ [9. PHPCBF](#9-phpcbf)
+    _ [10. PHP-CS-FIXER](#10-php-cs-fixer)
+    _ [11. PHPLOC](#11-phploc)
+-   [License](#license)
 
 ## Install
 
@@ -110,6 +109,23 @@ You can use rules defined in this package (see file `phpstan.eon`) or use your o
 For more information about PHPStan, please take a look on the [PHPStan repository](https://github.com/phpstan/phpstan).
 
 Note: be sure that PHPStan is installed by running `composer global require phpstan/phpstan` (or by using the composer.json mentioned in chapter 1)
+
+##### Common errors
+
+###### Autoloading not configured properly
+
+If, inside your script, you're using external classes; be sure that your autoloader are loaded by PHPStan. If not, you'll receive the following error:
+`Class A_CLASS_NAME was not found while trying to analyse it - autoloading is probably not configured properly.`
+
+The solution: take a copy of the `phpstan.neon` present in this repository and copy the file in your application's root folder. Then edit the file and add your autoloader file; f.i.:
+
+```
+parameters:
+    - autoload_files:
+        - %currentWorkingDirectory%/my_autoloader.php
+```
+
+(don't remove any lines, just add yours)
 
 #### 3. PHPCPD
 

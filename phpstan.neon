@@ -1,6 +1,7 @@
 parameters:
     - autoload_files:
         - %currentWorkingDirectory%/vendor/autoload.php
+        - %currentWorkingDirectory%/autoload.php
     excludes_analyse:
         - %currentWorkingDirectory%/.phan/*
         - %currentWorkingDirectory%/.git/*
