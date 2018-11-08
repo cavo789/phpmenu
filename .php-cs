@@ -55,7 +55,7 @@ return PhpCsFixer\Config::create()
         // Converts ::class keywords to FQCN (Full Qualified Class Name) strings.
         // Convert use Foo\Bar\Baz; $className = Baz::class;
         // to $className = 'Foo\Bar\Baz';
-        'class_keyword_remove' => true,
+        'class_keyword_remove' => false,
         // Concatenation should be spaced according configuration.
         // Transform 'A'.'B'.'C' to 'A' . 'B' . 'C'
         'concat_space' => ['spacing' => 'one'],
