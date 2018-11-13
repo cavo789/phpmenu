@@ -113,9 +113,9 @@ FOR /d %%d IN (*.*) DO (
 )
 
 REM And process the root folder
-IF "%scanOnlyFolderName%" EQU "" (
-    CALL :fnProcessFolder . -l
-)
+REM IF "%scanOnlyFolderName%" EQU "" (
+REM     CALL :fnProcessFolder . -l
+REM )
 
 GOTO END:
 
@@ -128,12 +128,43 @@ ECHO.
 ECHO Process folder %1
 ECHO.
 
+REM Define the name for the logfile for the analyzed folder
+REM Will be php-cs-fixer_FOLDERNAME.log
+SET outputFile=%tmp%\php-cs-fixer_%1.log
+
+REM Remove previous file just to be sure that an old version won't remains
+IF EXIST %outputFile% (
+    DEL %outputFile%
+)
+
 REM ECHO Command line options are
 ECHO     fix %1 (scanned folder)
 ECHO     --config=%configFile% (configuration file used)
+ECHO     Output to %outputFile%
 ECHO.
 
-CALL %SCRIPT% fix %1 --show-progress=none --verbose --config=%configFile%
+CALL %SCRIPT% fix %1 --diff --show-progress=none --verbose --config=%configFile% >> %outputFile%
+
+REM Open Notepad; use START and not CALL because START will not wait by default
+REM but only when there is something in the log
+CALL :setFileSize %outputFile%
+
+REM When the output logfile is empty, perfect, otherwise open Notepad
+if %fileSize% LSS 1 (
+    ECHO *** Wonderful! Everything is OK in folder %1 ***
+) ELSE (
+    REM !!! Warnings found in folder %1 !!!
+    START notepad %outputFile%
+)
+
+GOTO:EOF
+
+::--------------------------------------------------------
+::-- setFileSize - Get file size
+::-- Should be called with the full filename as parameter
+::--------------------------------------------------------
+:setFileSize
+SET fileSize=%~z1
 
 GOTO:EOF
 

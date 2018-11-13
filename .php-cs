@@ -1,21 +1,15 @@
 <?php
 
-/*
- * This file is part of the xxxxxxx project.
- * (c) SPF BOSA IOD AS - PHP Dev Team
- * 2018 - 2018
- */
-
- // A few folders shouldn't be processed for optimization purpose
- // For instance, don't process the bootstrap folder (used in Laravel)
+// A few folders shouldn't be processed for optimization purpose
+// For instance, don't process the bootstrap folder (used in Laravel)
 $finder = PhpCsFixer\Finder::create()
     ->exclude('bootstrap');
 
-$header = <<<'EOF'
-This file is part of the xxxxxxx project.
-(c) SPF BOSA IOD AS - PHP Dev Team
-2018 - 2018
-EOF;
+//$header = <<<'EOF'
+//This file is part of the xxxxxxx project.
+//(c) SPF BOSA IOD AS - PHP Dev Team
+//2018 - 2018
+//EOF;
 
 // Lot of options are explained here :
 // https://mlocati.github.io/php-cs-fixer-configurator
