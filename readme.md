@@ -1,3 +1,5 @@
+![Banner](images/banner.jpg)
+
 # DOT Files
 
 > My dot files and configuration items / scripts. Remark: scripts are Windows batch files; won't work on other OS than Windows
