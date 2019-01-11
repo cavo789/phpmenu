@@ -92,21 +92,22 @@ ECHO.
 REM --level max is the highest control level (0 is the loosest and 7 is the strictest)
 REM is https://github.com/phpstan/phpstan#rule-levels
 
-REM ECHO Command line options are
-ECHO     %1 (scanned folder)
-ECHO     --level %LogLevel%
-ECHO     -c %configFile% (configuration file used)
-ECHO.
-
 REM Define the name for the logfile for the analyzed folder
 REM Will be phpstan_FOLDERNAME.log
 CALL :getBaseName %1
-SET outputFile=%tmp%\phpstan_%BaseName%.log
+SET outputFile=%tmp%\%PROGNAME%_%BaseName%.log
 
 REM Remove previous file just to be sure that an old version won't remains
 IF EXIST %outputFile% (
     DEL %outputFile%
 )
+
+REM ECHO Command line options are
+ECHO     %1 (scanned folder)
+ECHO     --level %LogLevel%
+ECHO     -c %configFile% (configuration file used)
+ECHO     output %outputFile%
+ECHO.
 
 REM Start PHPSTAN
 CALL %SCRIPT% analyze %1 --level %LogLevel% -c %configFile% >> %outputFile%

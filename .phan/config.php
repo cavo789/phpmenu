@@ -245,6 +245,13 @@ return [
     //       should be added to the `directory_list` as
     //       to `exclude_analysis_directory_list`.
     'exclude_analysis_directory_list' => [
+        '.git/',
+        '.phan/',
+        '.vscode/',
+        'docs/',
+        'resources/logs/',
+        'resources/reports/',
+        'tests/',
         'vendor/',
     ],
 
@@ -288,6 +295,9 @@ return [
     // Thus, both first-party and third-party code being used by
     // your application should be included in this list.
     'directory_list' => [
+        'src/classes',
+        'src/controllers',
+        'src/exceptions',
         'vendor/phpunit/phpunit/src',
     ],
     // A list of individual files to include in analysis

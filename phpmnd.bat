@@ -46,11 +46,23 @@ GOTO END:
 ECHO Process folder %1
 ECHO.
 
+REM Define the name for the logfile for the analyzed folder
+CALL :getBaseName %1
+SET outputFile=%tmp%\%PROGNAME%_%BaseName%.xml
+
+REM Remove previous file just to be sure that an old version won't remains
+IF EXIST %outputFile% (
+    DEL %outputFile%
+)
+
 REM ECHO Command line options are
 ECHO     %1 (scanned folder)
+ECHO     %outputFile% (output)
 ECHO.
 
-CALL %SCRIPT% %1 --progress --hint
+CALL %SCRIPT% %1 --progress --hint --xml-output=%outputFile%
+
+START chrome.exe %outputFile%
 
 GOTO:EOF
 

@@ -43,10 +43,13 @@ REM working directory i.e. the one of the project rulesets/codesize.xml
 REM If so, use that configuration file.
 REM If not, use the rulesets/codesize.xml present in the folder of the phpmd.bat
 REM script
-SET configFile=%cd%\rulesets\codesize.xml
+SET configFile=%cd%rulesets\codesize.xml
 IF NOT EXIST %configFile% (
-    SET configFile=%ScriptFolder%\rulesets\codesize.xml
+    SET configFile=%ScriptFolder%rulesets\codesize.xml
 )
+
+REM Delete previous logs
+DEL %tmp%\%PROGNAME%*.log /Q
 
 REM -------------------------------------------------------
 REM - Populate the list of folders that should be ignored -
@@ -124,7 +127,7 @@ ECHO Process folder %1
 ECHO.
 
 REM Define the name for the logfile for the analyzed folder
-SET outputFile=%tmp%\phpmd_%1.html
+SET outputFile=%tmp%\%PROGNAME%_%1.html
 
 REM Remove previous file just to be sure that an old version won't remains
 IF EXIST %outputFile% (

@@ -42,23 +42,23 @@ IF "%scanOnlyFolderName%" EQU "" (
 
 ECHO.
 
-ECHO   Scan tools
-ECHO     1. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %scanOnlyFolderName%
-ECHO     2. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
-ECHO     3. Start PHPCPD (PHP Copy/Paste detector) shortcut: phpcpd.bat %scanOnlyFolderName%
-ECHO     4. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
-ECHO     5. Start PHPMD (Start PHP Mess Detector) shortcut: phpmd.bat %scanOnlyFolderName%
-ECHO     6. Start PHPMND (Start PHP Magical Number) shortcut: phpmnd.bat
-ECHO     7. Start PHP Metrics (Start Static analysis tool for PHP) shortcut: phpmetrics.bat
+ECHO   Fix automatically standard violation
+ECHO     1. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
+ECHO     2. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
 ECHO.
-ECHO    10. Start  Check compatibility PHP 7.2 shortcut: phpcompatibility.bat
+ECHO   Scan tools
+ECHO    10. Start PHAN (Phan is a static analyzer for PHP) shortcut: phan.bat %scanOnlyFolderName%
+ECHO    11. Start PHPStan (PHP Static Analysis Tool) shortcut: phpstan.bat %scanOnlyFolderName%
+ECHO    12. Start PHPCPD (PHP Copy/Paste detector) shortcut: phpcpd.bat %scanOnlyFolderName%
+ECHO    13. Start PHPCS (Start PHP_CodeSniffer, detect and show remaining errors) shortcut: phpcs.bat %scanOnlyFolderName%
+ECHO    14. Start PHPMD (Start PHP Mess Detector) shortcut: phpmd.bat %scanOnlyFolderName%
+ECHO    15. Start PHPMND (Start PHP Magical Number) shortcut: phpmnd.bat
+ECHO    16. Start PHP Metrics (Start Static analysis tool for PHP) shortcut: phpmetrics.bat
+ECHO.
+ECHO    19. Start Check compatibility PHP 7.x shortcut: phpcompatibility.bat
 ECHO.
 ECHO   Testing tools
-ECHO    15. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
-ECHO.
-ECHO   Fixed standard violation
-ECHO    20. Start PHPCBF (Start PHP_CodeSniffer automatic fixer) shortcut: phpcbf.bat %scanOnlyFolderName%
-ECHO    21. Start PHP-CS-FIXER (Start PHP-CS-FIXER, detect and show remaining errors) shortcut: php-cs-fixer.bat %scanOnlyFolderName%
+ECHO    20. Start PHPUNIT (PHP Unit tests) shortcut: phpunit.bat
 ECHO.
 ECHO   Statistics
 ECHO    25. Start PHPLOC (Tool for quickly measuring the size of a PHP project) shortcut: phploc.bat %scanOnlyFolderName%
@@ -72,17 +72,20 @@ ECHO.
 SET /P answer="Please make a choice? " 0-30
 
 REM IF /I for case insensitive check
-IF /I "%answer%"=="1" GOTO :PHAN
-IF /I "%answer%"=="2" GOTO :PHPSTAN
-IF /I "%answer%"=="3" GOTO :PHPCPD
-IF /I "%answer%"=="4" GOTO :PHPCS
-IF /I "%answer%"=="5" GOTO :PHPMD
-IF /I "%answer%"=="6" GOTO :PHPMND
-IF /I "%answer%"=="7" GOTO :PHPMETRICS
-IF /I "%answer%"=="10" GOTO :PHPCOMPATIBILITY
-IF /I "%answer%"=="15" GOTO :PHPUNIT
-IF /I "%answer%"=="20" GOTO :PHPCBF
-IF /I "%answer%"=="21" GOTO :PHPCSFIXER
+IF /I "%answer%"=="1" GOTO :PHPCBF
+IF /I "%answer%"=="2" GOTO :PHPCSFIXER
+
+IF /I "%answer%"=="10" GOTO :PHAN
+IF /I "%answer%"=="11" GOTO :PHPSTAN
+IF /I "%answer%"=="12" GOTO :PHPCPD
+IF /I "%answer%"=="13" GOTO :PHPCS
+IF /I "%answer%"=="14" GOTO :PHPMD
+IF /I "%answer%"=="15" GOTO :PHPMND
+IF /I "%answer%"=="16" GOTO :PHPMETRICS
+
+IF /I "%answer%"=="19" GOTO :PHPCOMPATIBILITY
+IF /I "%answer%"=="20" GOTO :PHPUNIT
+
 IF /I "%answer%"=="25" GOTO :PHPLOC
 IF /I "%answer%"=="30" GOTO :PHPDOC
 

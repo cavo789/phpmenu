@@ -41,7 +41,7 @@ ECHO Process folder %1
 ECHO.
 
 REM Define the name for the output folder
-SET outputFolder=%tmp%\phpmetrics
+SET outputFolder=%tmp%\%PROGNAME%
 
 REM Remove previous file just to be sure that an old version won't remains
 IF EXIST %outputFolder% (
