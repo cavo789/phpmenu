@@ -20,5 +20,7 @@
         "graphp/graphviz": "^0.2.1",
         "phpcompatibility/php-compatibility": "^9.0",
         "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
     }
 }

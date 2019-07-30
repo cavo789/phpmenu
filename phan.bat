@@ -50,7 +50,7 @@ IF NOT EXIST %configFile% (
 )
 
 REM Delete previous logs
-DEL %tmp%\%PROGNAME%*.log /Q
+DEL %tmp%\%PROGNAME%*.log /Q > NUL
 
 REM If the script is started with a dot as folder to check, 
 REM it means: run accross all folders so just do it and job is done
@@ -222,7 +222,7 @@ DIR /B /O:n %tmp%\%PROGNAME%*.log > %LOGFILES%
 
 REM Make sure we won't use previous run
 IF EXIST %MERGED% (
-    DEL %MERGED%
+    DEL %MERGED% > NUL
 )
 
 REM Process every single log file; one by one
