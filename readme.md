@@ -1,6 +1,6 @@
-![Banner](images/banner.jpg)
-
 # PHP menu
+
+![Banner](./banner.svg)
 
 > My PHP toolbox (configuration files and utilities). Remark: scripts are Windows batch files; won't work on other OS than Windows
 
